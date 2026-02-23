@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Kategori\KategoriController;
 use App\Http\Controllers\Buku\BukuController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OtpController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -11,13 +14,21 @@ use App\Http\Controllers\Buku\BukuController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/otp', [OtpController::class, 'show'])->name('otp.form');
+Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
+
+
+// Google Login
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
 // Redirect root ke dashboard
 Route::redirect('/', '/dashboard');
 
 // Dashboard (wajib login + verified)
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 // Profile (wajib login)
 Route::middleware('auth')->group(function () {
