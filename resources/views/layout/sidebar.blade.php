@@ -40,5 +40,23 @@
                 <i class="mdi mdi-book menu-icon"></i>
               </a>
             </li>
+            <li class="nav-item {{ request()->routeIs('sertifikat') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ url('/sertifikat') }}">
+                <span class="menu-title">Generate Sertifikat</span>
+                <i class="mdi mdi-file-document menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('pengumuman') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ url('/pengumuman') }}">
+                <span class="menu-title">Generate Pengumuman</span>
+                <i class="mdi mdi-file-document menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('barang.*') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('barang.index') }}">
+                <span class="menu-title">Tag Harga (Barang)</span>
+                <i class="mdi mdi-tag-multiple menu-icon"></i>
+              </a>
+            </li>
           </ul>
         </nav>

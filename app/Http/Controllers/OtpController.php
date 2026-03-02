@@ -36,7 +36,7 @@ class OtpController extends Controller
 
          Auth::login($user);
          $request->session()->regenerate();
-        session()->forget('otp_user_id');
+         session()->forget('otp_user_id');
 
             return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }

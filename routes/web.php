@@ -6,6 +6,8 @@ use App\Http\Controllers\Kategori\KategoriController;
 use App\Http\Controllers\Buku\BukuController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OtpController;
+use App\Http\Controllers\Pdf\PdfController;
+use App\Http\Controllers\Barang\BarangController;
 
 
 /*
@@ -50,6 +52,19 @@ Route::post('/buku/store', [BukuController::class, 'store'])->name('buku.store')
 Route::get('/buku/edit/{id}', [BukuController::class, 'edit'])->name('buku.edit');
 Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
 Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+
+Route::get('/sertifikat', [PdfController::class, 'sertifikat']);
+Route::get('/pengumuman', [PdfController::class, 'pengumuman']);
+
+Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
+Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
+Route::get('/barang/edit/{id}', [BarangController::class, 'edit'])->name('barang.edit');
+Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
+Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+Route::post('/barang/cetak-label', [BarangController::class, 'cetaklabel'])->name('cetak.label');
+
+
 
 
 // Auth routes dari Breeze
