@@ -4,28 +4,28 @@
 <style>
 @page {
     size: A4;
-    margin: 5mm;
+    margin: 0;
 }
-* {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-}
+
 body {
     margin: 0;
     padding: 0;
+    width: 210mm;
+    height: 297mm;          /*167*/
     font-family: Arial, sans-serif;
-    background-color: #fafad2;
+    background-color: #ffffff;
 }
 table {
-    width: 100%;
-    height: 277mm;
+    height: 200mm;
+    width: 190mm;
+    margin-left: 10mm;  /* center horizontal */
+    margin-top: 8.5mm;
     border-collapse: collapse;
     table-layout: fixed;
 }
 td.label {
     width: 38mm;
-    height: 18mm;
-    border: 7px solid #c8c8a0;
+    height: 25mm;
     padding: 3mm;
     font-size: 10px;
     box-sizing: border-box;

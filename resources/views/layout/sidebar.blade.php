@@ -26,13 +26,6 @@
                 <span class="menu-title">Kategori</span>
                 <i class="mdi mdi-view-list menu-icon"></i>
               </a>
-              <div class="collapse" id="icons">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item">
-                    <a class="nav-link" href="pages/icons/font-awesome.html">Font Awesome</a>
-                  </li>
-                </ul>
-              </div>
             </li>
             <li class="nav-item {{ request()->routeIs('buku.*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('buku.index') }}">
@@ -58,5 +51,44 @@
                 <i class="mdi mdi-tag-multiple menu-icon"></i>
               </a>
             </li>
-          </ul>
-        </nav>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#tugas-js" aria-expanded="false" aria-controls="tugas-js">
+                <span class="menu-title">Tugas Javascript</span>
+                <i class="menu-arrow"></i>
+              </a>
+
+              <div class="collapse" id="tugas-js">
+                <ul class="nav flex-column sub-menu">
+
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('tugas.barang') ? 'active' : '' }}"
+                  href="{{ route('tugas.barang') }}">
+                  Form Barang
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('tugas.html') ? 'active' : '' }}"
+                  href="{{ route('tugas.html') }}">
+                  Table HTML Biasa
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('tugas.datatable') ? 'active' : '' }}"
+                  href="{{ route('tugas.datatable') }}">
+                  Table DataTables
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('tugas.kota') ? 'active' : '' }}"
+                  href="{{ route('tugas.kota') }}">
+                  Kota
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>

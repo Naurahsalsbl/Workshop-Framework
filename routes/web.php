@@ -64,7 +64,21 @@ Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.up
 Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 Route::post('/barang/cetak-label', [BarangController::class, 'cetaklabel'])->name('cetak.label');
 
+Route::get('/tugas/barang', function () {
+    return view('tugas.barang');
+})->name('tugas.barang');
 
+Route::get('/tugas/html', function () {
+    return view('tugas.html');
+})->name('tugas.html');
+
+Route::get('/tugas/datatable', function () {
+    return view('tugas.datatable');
+})->name('tugas.datatable');
+
+Route::get('/tugas/kota', function () {
+    return view('tugas.kota');
+})->name('tugas.kota');
 
 
 // Auth routes dari Breeze
