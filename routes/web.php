@@ -8,6 +8,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\Pdf\PdfController;
 use App\Http\Controllers\Barang\BarangController;
+use App\Http\Controllers\Pos\PosController;
+use App\Http\Controllers\Wilayah\WilayahController;
 
 
 /*
@@ -79,6 +81,15 @@ Route::get('/tugas/datatable', function () {
 Route::get('/tugas/kota', function () {
     return view('tugas.kota');
 })->name('tugas.kota');
+
+Route::get('/wilayah', [WilayahController::class, 'index'])->name('wilayah.index');
+Route::get('/wilayah/kota', [WilayahController::class, 'getKota'])->name('wilayah.kota');
+Route::get('/wilayah/kecamatan', [WilayahController::class, 'getKecamatan'])->name('wilayah.kecamatan');
+Route::get('/wilayah/kelurahan', [WilayahController::class, 'getKelurahan'])->name('wilayah.kelurahan');
+
+Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+Route::get('/pos/cari-barang', [PosController::class, 'cariBarang'])->name('pos.cari_barang');
+Route::post('/pos/bayar', [PosController::class, 'bayar'])->name('pos.bayar');
 
 
 // Auth routes dari Breeze

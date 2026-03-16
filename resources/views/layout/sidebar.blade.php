@@ -90,5 +90,18 @@
             </ul>
           </div>
         </li>
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('wilayah.index') ? 'active' : '' }}"
+                  href="{{ route('wilayah.index') }}">
+                  Wilayah
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('pos.index') ? 'active' : '' }}"
+                  href="{{ route('pos.index') }}">
+                  POS / Kasir
+                </a>
+              </li>
       </ul>
     </nav>
