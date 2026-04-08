@@ -1,16 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Kategori\KategoriController;
-use App\Http\Controllers\Buku\BukuController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\OtpController;
-use App\Http\Controllers\Pdf\PdfController;
 use App\Http\Controllers\Barang\BarangController;
+use App\Http\Controllers\Buku\BukuController;
+use App\Http\Controllers\Kategori\KategoriController;
+use App\Http\Controllers\Menu\MenuController;
+use App\Http\Controllers\OtpController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Pdf\PdfController;
+use App\Http\Controllers\Pesanan\PesananController;
+use App\Http\Controllers\Pesanan\PesananVendorController;
 use App\Http\Controllers\Pos\PosController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Vendor\VendorAuthController;
 use App\Http\Controllers\Wilayah\WilayahController;
-
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +94,44 @@ Route::get('/wilayah/kelurahan', [WilayahController::class, 'getKelurahan'])->na
 Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
 Route::get('/pos/cari-barang', [PosController::class, 'cariBarang'])->name('pos.cari_barang');
 Route::post('/pos/bayar', [PosController::class, 'bayar'])->name('pos.bayar');
+
+// Vendor Auth
+Route::get('/vendor/login', [VendorAuthController::class, 'showLogin'])->name('vendor.login');
+Route::post('/vendor/login', [VendorAuthController::class, 'login'])->name('vendor.login.post');
+Route::post('/vendor/logout', [VendorAuthController::class, 'logout'])->name('vendor.logout');
+
+// Vendor Protected Routes
+Route::prefix('vendor')->name('vendor.')->group(function () {
+    Route::get('/dashboard', function () {
+        if (!session('vendor_id')) {
+            return redirect()->route('vendor.login');
+        }
+        return view('vendor.dashboard');
+    })->name('dashboard');
+
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+    Route::get('/menu/create', [MenuController::class, 'create'])->name('menu.create');
+    Route::post('/menu/store', [MenuController::class, 'store'])->name('menu.store');
+    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+
+    Route::get('/pesanan', [PesananVendorController::class, 'index'])->name('pesanan.index');
+
+});
+
+// Halaman pemesanan
+Route::get('/order', [PesananController::class, 'index'])->name('customer.order.index');
+
+// Ambil menu vendor via AJAX
+Route::get('/order/menu/{idvendor}', [PesananController::class, 'getMenu'])->name('customer.order.getMenu');
+
+// Simpan pesanan via AJAX
+Route::post('/order/store', [PesananController::class, 'store'])->name('customer.order.store');
+
+
+Route::get('/payment/{idpesanan}', [PaymentController::class, 'show'])->name('payment.show');
+Route::post('/payment/notification', [PaymentController::class, 'handleNotification'])->name('payment.notification');
+
+
 
 
 // Auth routes dari Breeze

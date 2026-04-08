@@ -173,7 +173,6 @@ $('#jquery-provinsi').on('change', function () {
 
     if (provinceId == 0) return;
 
-    // AJAX ke server untuk ambil data kota
     $.ajax({
         url: "{{ route('wilayah.kota') }}",
         method: "GET",

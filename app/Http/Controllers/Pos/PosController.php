@@ -75,7 +75,7 @@ class PosController extends Controller
         $id_penjualan = DB::table('penjualan')->insertGetId([
             'timestamp' => now(),
             'total'     => $total
-        ]);
+        ], 'id_penjualan');
 
         // Simpan detail ke tabel penjualan_detail
         $details = [];
