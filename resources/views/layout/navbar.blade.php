@@ -28,7 +28,7 @@
     <ul class="navbar-nav navbar-nav-right">
       <!-- Profile Dropdown -->
       <li class="nav-item nav-profile dropdown">
-        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
           <div class="nav-profile-img">
             <img src="{{ asset('assets/images/faces/face2.jpg') }}" alt="image">
             <span class="availability-status online"></span>
@@ -47,11 +47,20 @@
           @auth
           <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="dropdown-item">
+            <button type="submit" class="dropdown-item" style="display:block; width:100%;">
               <i class="mdi mdi-logout me-2 text-primary"></i> Logout
             </button>
           </form>
           @endauth
+          {{-- Logout Vendor --}}
+          @if(session('vendor_id'))
+          <form method="POST" action="{{ route('vendor.logout') }}">
+              @csrf
+              <button type="submit" class="dropdown-item">
+                  <i class="mdi mdi-logout me-2 text-primary"></i> Logout
+              </button>
+          </form>
+          @endif
         </div>
       </li>
 

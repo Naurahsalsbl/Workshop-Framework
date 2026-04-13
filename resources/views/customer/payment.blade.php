@@ -119,8 +119,8 @@
         this.innerHTML = '<i class="mdi mdi-loading mdi-spin me-2"></i>Memproses...';
 
         snap.pay('{{ $snapToken }}', {
-            onSuccess: function (result) {
-                location.reload();
+                onSuccess: function(result){
+                    window.location.href = "/payment/success/{{ $pesanan->idpesanan }}";
             },
             onPending: function (result) {
                 location.reload();

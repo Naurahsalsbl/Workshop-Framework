@@ -14,15 +14,14 @@
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
   @yield('style-page')
   <style>
-  #tabelBarang tbody tr:hover{
-    cursor:pointer;
-}
-</style>
+    #tabelBarang tbody tr:hover {
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
@@ -34,7 +33,11 @@
   <div class="container-fluid page-body-wrapper">
 
     {{-- SIDEBAR --}}
-    @include('layout.sidebar')
+    @if(session('vendor_id'))
+    @include('layout.sidebar_vendor')
+    @else
+        @include('layout.sidebar')
+    @endif
 
     <div class="main-panel">
       <div class="content-wrapper">
@@ -51,7 +54,8 @@
   </div>
 </div>
 
-<!-- JS GLOBAL -->
+<!-- JS GLOBAL: jQuery dulu sebelum yang lain -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
 <script src="{{ asset('assets/vendors/chart.js/chart.umd.js') }}"></script>
 <script src="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
@@ -62,11 +66,32 @@
 <script src="{{ asset('assets/js/jquery.cookie.js') }}"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
+  // Profile dropdown manual (hindari konflik jQuery vs Bootstrap)
+  document.addEventListener('DOMContentLoaded', function () {
+    var trigger = document.getElementById('profileDropdown');
+    var menu = document.querySelector('[aria-labelledby="profileDropdown"]');
+
+    if (trigger && menu) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var isOpen = menu.style.display === 'block';
+        menu.style.display = isOpen ? 'none' : 'block';
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+          menu.style.display = 'none';
+        }
+      });
+    }
+  });
+</script>
 
 @yield('js-page')
 

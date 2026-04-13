@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Midtrans\Notification;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
 
 class PaymentController extends Controller
 {
@@ -30,8 +32,8 @@ class PaymentController extends Controller
         // Buat token Midtrans
         $params = [
             'transaction_details' => [
-                'order_id'     => 'ORDER-' . $pesanan->idpesanan . '-' . time(),
-                'gross_amount' => $pesanan->total,
+                'order_id'     => 'ORDER-' . $pesanan->idpesanan . '-' . uniqid(),
+                'gross_amount' => (int) $pesanan->total,
             ],
             'customer_details' => [
                 'first_name' => $pesanan->nama,
@@ -39,14 +41,17 @@ class PaymentController extends Controller
             'enabled_payments' => ['bank_transfer', 'gopay'],
         ];
 
+        $transaction = Snap::createTransaction($params);
         $snapToken = Snap::getSnapToken($params);
+        $redirectUrl = $transaction->redirect_url;
+
 
         // Simpan token ke database
         DB::table('pesanan')->where('idpesanan', $idpesanan)->update([
             'midtrans_token' => $snapToken,
         ]);
 
-        return view('customer.payment', compact('pesanan', 'snapToken'));
+        return view('customer.payment', compact('pesanan', 'snapToken', 'redirectUrl'));
     }
 
     // Webhook notifikasi dari Midtrans
@@ -77,5 +82,33 @@ class PaymentController extends Controller
         }
 
         return response()->json(['status' => 'ok']);
+    }
+
+    public function detail($id)
+    {
+        $pesanan = DB::table('pesanan')->where('idpesanan', $id)->first();
+
+        return view('customer.detail', compact('pesanan'));
+    }
+
+    public function success($idpesanan)
+    {
+        $pesanan = DB::table('pesanan')->where('idpesanan', $idpesanan)->first();
+
+        if (!$pesanan) {
+            abort(404);
+        }
+
+        $builder = new Builder(
+            writer: new PngWriter(),
+            data: url('/payment/detail/' . $pesanan->idpesanan),
+            size: 200,
+            margin: 5
+        );
+
+        $result = $builder->build();
+        $qrBase64 = base64_encode($result->getString());
+
+        return view('customer.success', compact('pesanan', 'qrBase64'));
     }
 }

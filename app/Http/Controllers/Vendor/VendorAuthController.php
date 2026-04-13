@@ -9,10 +9,10 @@ use App\Http\Controllers\Controller;
 
 class VendorAuthController extends Controller
 {
-    public function showLogin()
-    {
-        return view('vendor.login');
-    }
+    // public function showLogin()
+    // {
+    //     return view('vendor.login');
+    // }
 
     public function login(Request $request)
     {
@@ -40,6 +40,20 @@ class VendorAuthController extends Controller
     public function logout()
     {
         session()->forget(['vendor_id', 'vendor_nama']);
-        return redirect()->route('vendor.login');
+        return redirect()->route('login');
+    }
+
+    public function masukSebagaiVendor($vendor_id)
+    {
+        $vendor = DB::table('vendor')->where('idvendor', $vendor_id)->first();
+
+        if (!$vendor) abort(404);
+
+        session([
+            'vendor_id'   => $vendor->idvendor,
+            'vendor_nama' => $vendor->nama_vendor,
+        ]);
+
+        return redirect()->route('vendor.dashboard');
     }
 }

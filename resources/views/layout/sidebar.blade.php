@@ -113,29 +113,27 @@
 
     {{-- Vendor Menu --}}
     <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('vendor.dashboard') ? 'active' : '' }}" href="{{ route('vendor.dashboard') }}">
-        <i class="bi bi-speedometer2 me-2"></i> Vendor Dashboard
-      </a>
+        <a class="nav-link" data-bs-toggle="collapse" href="#vendor-list" aria-expanded="false">
+            <span class="menu-title">Vendor</span>
+            <i class="mdi mdi-store menu-icon"></i>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="vendor-list">
+            <ul class="nav flex-column sub-menu ps-3">
+                @foreach($vendors as $vendor)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('vendor.masuk', $vendor->idvendor) }}">
+                        <i class="mdi mdi-store-outline me-1"></i> {{ $vendor->nama_vendor }}
+                    </a>
+                </li>
+                @endforeach
+            </ul>
+        </div>
     </li>
-    <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('vendor.menu.*') ? 'active' : '' }}" href="{{ route('vendor.menu.index') }}">
-        <i class="bi bi-card-list me-2"></i> Menu Vendor
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('vendor.pesanan.*') ? 'active' : '' }}" href="{{ route('vendor.pesanan.index') }}">
-        <i class="bi bi-basket me-2"></i> Pesanan Vendor
-      </a>
-    </li>
-
+    
     <hr class="my-2">
 
-    {{-- Customer Pemesanan --}}
-    <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('customer.order.*') ? 'active' : '' }}" href="{{ route('customer.order.index') }}">
-        <i class="bi bi-cart me-2"></i> Pemesanan Customer
-      </a>
-    </li>
+    
 
   </ul>
 </nav>

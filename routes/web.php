@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Barang\BarangController;
 use App\Http\Controllers\Buku\BukuController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Kategori\KategoriController;
 use App\Http\Controllers\Menu\MenuController;
 use App\Http\Controllers\OtpController;
@@ -96,15 +97,16 @@ Route::get('/pos/cari-barang', [PosController::class, 'cariBarang'])->name('pos.
 Route::post('/pos/bayar', [PosController::class, 'bayar'])->name('pos.bayar');
 
 // Vendor Auth
-Route::get('/vendor/login', [VendorAuthController::class, 'showLogin'])->name('vendor.login');
+//Route::get('/vendor/login', [VendorAuthController::class, 'showLogin'])->name('vendor.login');
 Route::post('/vendor/login', [VendorAuthController::class, 'login'])->name('vendor.login.post');
 Route::post('/vendor/logout', [VendorAuthController::class, 'logout'])->name('vendor.logout');
+Route::get('/vendor/masuk/{vendor_id}', [VendorAuthController::class,'masukSebagaiVendor'])->name('vendor.masuk');
 
-// Vendor Protected Routes
+//Vendor Protected Routes
 Route::prefix('vendor')->name('vendor.')->group(function () {
     Route::get('/dashboard', function () {
         if (!session('vendor_id')) {
-            return redirect()->route('vendor.login');
+            return redirect()->route('login');
         }
         return view('vendor.dashboard');
     })->name('dashboard');
@@ -130,7 +132,19 @@ Route::post('/order/store', [PesananController::class, 'store'])->name('customer
 
 Route::get('/payment/{idpesanan}', [PaymentController::class, 'show'])->name('payment.show');
 Route::post('/payment/notification', [PaymentController::class, 'handleNotification'])->name('payment.notification');
+Route::get('/payment/detail/{id}', [PaymentController::class, 'detail']);
+Route::get('/payment/success/{id}', [PaymentController::class, 'success'])->name('payment.success');
 
+Route::get('/scan', function () {
+    return view('scanner.index');
+});
+
+Route::get('/customer', [CustomerController::class, 'index']);
+Route::get('/customer/create1', [CustomerController::class, 'create1']);
+Route::post('/customer/store1', [CustomerController::class, 'store1']);
+Route::get('/customer/create2', [CustomerController::class, 'create2']);
+Route::post('/customer/store2', [CustomerController::class, 'store2']);
+Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 
 
 
