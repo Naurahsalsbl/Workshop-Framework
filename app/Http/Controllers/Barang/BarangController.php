@@ -88,7 +88,7 @@ class BarangController extends Controller
         
         foreach ($barang as $item) {
             $item->barcode = base64_encode(
-                $generator->getBarcode($item->id_barang, $generator::TYPE_CODE_128)
+                $generator->getBarcode($item->id_barang, $generator::TYPE_CODE_128, 2, 60)
             );
         }
         $mm = 2.83465;
@@ -98,5 +98,31 @@ class BarangController extends Controller
         return $pdf->stream('label-barang.pdf');
 
         //return view('barang.cetak', compact('barang','x','y'));
+    }
+
+    public function getBarang($id)
+    {
+        $barang = DB::table('barang')
+                    ->where('id_barang', $id)
+                    ->first();
+
+        if(!$barang){
+            return response()->json(null);
+        }
+
+        return response()->json([
+            'id_barang' => $barang->id_barang,
+            'nama' => $barang->nama, // ⚠️ sesuaikan field kamu
+            'harga' => $barang->harga
+        ]);
+    }
+
+    public function findById($id)
+    {
+        $barang = Barang::find($id);
+        if (!$barang) {
+            return response()->json(['error' => 'Barang tidak ditemukan'], 404);
+        }
+        return response()->json($barang);
     }
 }

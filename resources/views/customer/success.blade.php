@@ -26,4 +26,9 @@
         <a href="/" class="btn btn-purple w-100 mt-2">Kembali ke Beranda</a>
     </div>
 </div>
+
+<script>
+    // simpan ID pesanan ke localStorage
+    localStorage.setItem("lastPesanan", "{{ $pesanan->idpesanan }}");
+</script>
 @endsection

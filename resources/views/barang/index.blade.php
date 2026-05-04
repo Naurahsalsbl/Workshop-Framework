@@ -47,7 +47,7 @@
         </thead>
         <tbody>
             @foreach($barang as $b)
-            <tr>
+            <tr id="row-{{ $b->id_barang }}">
                 <td>
                     <input type="checkbox" form="formCetak" name="pilih[]" value="{{ $b->id_barang }}">
                 </td>

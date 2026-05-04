@@ -16,6 +16,11 @@
         <i class="bi bi-basket me-2"></i> Pesanan Vendor
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('vendor.scan.*') ? 'active' : '' }}" href="{{ route('vendor.scan') }}">
+        <i class="bi bi-basket me-2"></i> Scan Qr
+      </a>
+    </li>
 
     <hr class="my-2">
 

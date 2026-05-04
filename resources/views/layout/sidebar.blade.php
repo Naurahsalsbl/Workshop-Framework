@@ -132,6 +132,22 @@
     </li>
     
     <hr class="my-2">
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('scanner.index') ? 'active' : '' }}" href="{{ route('scanner.index') }}">
+        Scan QR
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('cust.index') ? 'active' : '' }}" href="{{ route('cust.index') }}">
+        Customer
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('barang.scan') ? 'active' : '' }}" href="{{ route('barang.scan') }}">
+        Scan Label
+      </a>
+    </li>
+
 
     
 

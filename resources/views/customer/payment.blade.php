@@ -118,20 +118,51 @@
         this.disabled = true;
         this.innerHTML = '<i class="mdi mdi-loading mdi-spin me-2"></i>Memproses...';
 
-        snap.pay('{{ $snapToken }}', {
-                onSuccess: function(result){
-                    window.location.href = "/payment/success/{{ $pesanan->idpesanan }}";
+            snap.pay('{{ $snapToken }}', {
+            onSuccess: function(result){
+
+                // ✅ update status ke database dulu
+                fetch('/payment/update-status', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        idpesanan: "{{ $pesanan->idpesanan }}"
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success){
+                        // ✅ baru redirect ke halaman QR
+                        window.location.href = "/payment/success/{{ $pesanan->idpesanan }}";
+                    } else {
+                        alert("Gagal update status pembayaran");
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Terjadi error");
+                    location.reload();
+                });
             },
-            onPending: function (result) {
+
+            onPending: function () {
                 location.reload();
             },
-            onError: function (result) {
+
+            onError: function () {
                 alert('Pembayaran gagal, silakan coba lagi.');
                 location.reload();
             },
+
             onClose: function () {
                 document.getElementById('btnBayar').disabled = false;
-                document.getElementById('btnBayar').innerHTML = '<i class="mdi mdi-lock me-2"></i>Bayar Sekarang<small class="d-block" style="font-size: 11px; opacity: 0.8;">Powered by Midtrans</small>';
+                document.getElementById('btnBayar').innerHTML =
+                    '<i class="mdi mdi-lock me-2"></i>Bayar Sekarang' +
+                    '<small class="d-block" style="font-size: 11px; opacity: 0.8;">Powered by Midtrans</small>';
             }
         });
     });

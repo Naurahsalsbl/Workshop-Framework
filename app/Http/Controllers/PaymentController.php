@@ -39,6 +39,10 @@ class PaymentController extends Controller
                 'first_name' => $pesanan->nama,
             ],
             'enabled_payments' => ['bank_transfer', 'gopay'],
+
+            'callbacks' => [
+                'finish' => url('/payment/success/' . $pesanan->idpesanan)
+            ]
         ];
 
         $transaction = Snap::createTransaction($params);
@@ -110,5 +114,43 @@ class PaymentController extends Controller
         $qrBase64 = base64_encode($result->getString());
 
         return view('customer.success', compact('pesanan', 'qrBase64'));
+    }
+
+    public function updateStatus(Request $request)
+    {
+        DB::table('pesanan')
+            ->where('idpesanan', $request->idpesanan)
+            ->update([
+                'status_bayar' => 1
+            ]);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function showQR()
+    {
+        return view('payment.qr');
+    }
+
+    public function apiDetail($id)
+    {
+        $pesanan = DB::table('pesanan')->where('idpesanan', $id)->first();
+
+        if (!$pesanan) {
+            return response()->json(['error' => 'Not found'], 404);
+        }
+
+        $menu = DB::table('detail_pesanan')
+            ->join('menu', 'detail_pesanan.idmenu', '=', 'menu.idmenu')
+            ->where('detail_pesanan.idpesanan', $id)
+            ->select('menu.nama_menu as nama', 'detail_pesanan.jumlah as qty')
+            ->get();
+
+        return response()->json([
+            'pesanan' => $pesanan,
+            'menu' => $menu
+        ]);
     }
 }

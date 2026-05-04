@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CustomerController extends Controller
 {
@@ -88,5 +89,49 @@ class CustomerController extends Controller
         DB::table('customer')->where('id', $id)->delete();
 
         return redirect('/customer')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function checkout(Request $request)
+    {
+        // generate ID pesanan
+        $idpesanan = 'ORD' . rand(1000,9999);
+
+        // contoh data (nanti bisa dari cart/session)
+        $nama = $request->nama;
+        $total = $request->total;
+
+        // simpan ke database
+        DB::table('pesanan')->insert([
+            'idpesanan' => $idpesanan,
+            'nama' => $nama,
+            'total' => $total,
+            'status' => 'Sudah Bayar'
+        ]);
+
+        // generate QR (isi = ID pesanan)
+        $qrCode = QrCode::format('png')->size(200)->generate($idpesanan);
+        $qrBase64 = base64_encode($qrCode);
+
+        // kirim ke view
+        $pesanan = (object)[
+            'idpesanan' => $idpesanan,
+            'nama' => $nama,
+            'total' => $total
+        ];
+
+        return view('cust.success', compact('qrBase64', 'pesanan'));
+    }
+
+    public function updateStatus(Request $request)
+    {
+        DB::table('pesanan')
+            ->where('idpesanan', $request->idpesanan)
+            ->update([
+                'status_bayar' => 1
+            ]);
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

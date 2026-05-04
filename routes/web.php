@@ -71,6 +71,12 @@ Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.up
 Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 Route::post('/barang/cetak-label', [BarangController::class, 'cetaklabel'])->name('cetak.label');
 
+Route::get('/api/barang/{id}', [BarangController::class, 'getBarang']);
+
+Route::get('/scan', function () {
+    return view('barang.scan');
+})->name('barang.scan');
+
 Route::get('/tugas/barang', function () {
     return view('tugas.barang');
 })->name('tugas.barang');
@@ -134,17 +140,28 @@ Route::get('/payment/{idpesanan}', [PaymentController::class, 'show'])->name('pa
 Route::post('/payment/notification', [PaymentController::class, 'handleNotification'])->name('payment.notification');
 Route::get('/payment/detail/{id}', [PaymentController::class, 'detail']);
 Route::get('/payment/success/{id}', [PaymentController::class, 'success'])->name('payment.success');
+Route::post('/payment/update-status', [PaymentController::class, 'updateStatus']);
+Route::get('/customer/qr', [PaymentController::class, 'showQR']);
+Route::get('/api/pesanan/{id}', [PaymentController::class, 'apiDetail']);
 
-Route::get('/scan', function () {
+Route::get('/vendor/scan', function () {
+    return view('vendor.scan');
+})->name('vendor.scan');
+
+
+Route::get('/scanner', function () {
     return view('scanner.index');
-});
+})->name('scanner.index');
 
-Route::get('/customer', [CustomerController::class, 'index']);
+Route::get('/customer', [CustomerController::class, 'index'])->name('cust.index');
 Route::get('/customer/create1', [CustomerController::class, 'create1']);
 Route::post('/customer/store1', [CustomerController::class, 'store1']);
 Route::get('/customer/create2', [CustomerController::class, 'create2']);
 Route::post('/customer/store2', [CustomerController::class, 'store2']);
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
+Route::post('/customer/checkout', [CustomerController::class, 'checkout']);
+Route::post('/customer/update-status', [CustomerController::class, 'updateStatus']);
+
 
 
 

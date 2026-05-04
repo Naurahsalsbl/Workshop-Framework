@@ -39,8 +39,8 @@ td.empty {
 }
 
 .barcode img {
-    width: 90%;
-    height: 14px;
+    width: 100%;
+    height: 28px;
     object-fit: contain;
     margin-bottom: 2px;
 }
