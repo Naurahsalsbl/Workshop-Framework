@@ -147,6 +147,11 @@
         Scan Label
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('toko.index') ? 'active' : '' }}" href="{{ route('toko.index') }}">
+        Kunjungan Toko
+      </a>
+    </li>
 
 
     

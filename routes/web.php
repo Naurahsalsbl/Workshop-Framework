@@ -15,6 +15,7 @@ use App\Http\Controllers\Pos\PosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorAuthController;
 use App\Http\Controllers\Wilayah\WilayahController;
+use App\Http\Controllers\Toko\TokoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -161,6 +162,19 @@ Route::post('/customer/store2', [CustomerController::class, 'store2']);
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 Route::post('/customer/checkout', [CustomerController::class, 'checkout']);
 Route::post('/customer/update-status', [CustomerController::class, 'updateStatus']);
+
+
+Route::get('/', [TokoController::class, 'index'])->name('toko.index');
+Route::get('/create', [TokoController::class, 'create'])->name('toko.create');
+Route::post('/', [TokoController::class, 'store'])->name('toko.store');
+Route::post('/validasi', [TokoController::class, 'validasiKunjungan'])->name('toko.validasi');
+Route::post('/{id}/titik-awal', [TokoController::class, 'simpanTitikAwal'])->name('toko.titik-awal');
+Route::get('/barcode/{barcode}', [TokoController::class, 'findByBarcode'])->name('toko.find-barcode');
+Route::get('/{id}/cetak-barcode', [TokoController::class, 'cetakBarcode'])->name('toko.cetak-barcode');
+Route::get('/kunjungan/scanner', function () {
+    return view('toko.scanner');
+})->name('toko.scanner');
+
 
 
 
