@@ -16,6 +16,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorAuthController;
 use App\Http\Controllers\Wilayah\WilayahController;
 use App\Http\Controllers\Toko\TokoController;
+use App\Http\Controllers\Antrian\AntrianController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
 
 Route::get('/otp', [OtpController::class, 'show'])->name('otp.form');
 Route::post('/otp', [OtpController::class, 'verify'])->name('otp.verify');
@@ -136,7 +138,6 @@ Route::get('/order/menu/{idvendor}', [PesananController::class, 'getMenu'])->nam
 // Simpan pesanan via AJAX
 Route::post('/order/store', [PesananController::class, 'store'])->name('customer.order.store');
 
-
 Route::get('/payment/{idpesanan}', [PaymentController::class, 'show'])->name('payment.show');
 Route::post('/payment/notification', [PaymentController::class, 'handleNotification'])->name('payment.notification');
 Route::get('/payment/detail/{id}', [PaymentController::class, 'detail']);
@@ -163,7 +164,6 @@ Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 Route::post('/customer/checkout', [CustomerController::class, 'checkout']);
 Route::post('/customer/update-status', [CustomerController::class, 'updateStatus']);
 
-
 Route::get('/', [TokoController::class, 'index'])->name('toko.index');
 Route::get('/create', [TokoController::class, 'create'])->name('toko.create');
 Route::post('/', [TokoController::class, 'store'])->name('toko.store');
@@ -175,8 +175,19 @@ Route::get('/kunjungan/scanner', function () {
     return view('toko.scanner');
 })->name('toko.scanner');
 
-
-
+// Pages
+Route::get('/guest',  [AntrianController::class, 'guest'])->name('antrian.guest');
+Route::get('/tiket',  [AntrianController::class, 'tiket'])->name('antrian.tiket');
+Route::get('/admin',  [AntrianController::class, 'admin'])->name('antrian.admin');
+Route::get('/papan',  [AntrianController::class, 'papan'])->name('antrian.papan');
+ 
+// Actions
+Route::post('/daftar',            [AntrianController::class, 'daftar'])->name('antrian.daftar');
+Route::post('/panggil',           [AntrianController::class, 'panggil'])->name('antrian.panggil');
+Route::post('/panggil-terlambat', [AntrianController::class, 'panggilTerlambat'])->name('antrian.panggil-terlambat');
+Route::post('/terlambat',         [AntrianController::class, 'terlambat'])->name('antrian.terlambat');
+Route::post('/selesai',           [AntrianController::class, 'selesai'])->name('antrian.selesai');
+Route::post('/reset',             [AntrianController::class, 'reset'])->name('antrian.reset');
 
 
 // Auth routes dari Breeze

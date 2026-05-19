@@ -152,7 +152,34 @@
         Kunjungan Toko
       </a>
     </li>
-
+    {{-- Antrian Collapse --}}
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#antrian-menu"
+         aria-expanded="{{ request()->routeIs('antrian.*') ? 'true' : 'false' }}">
+        <span class="menu-title">Antrian RS Digital</span>
+        <i class="mdi mdi-ticket-confirmation menu-icon"></i>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse {{ request()->routeIs('antrian.*') ? 'show' : '' }}" id="antrian-menu">
+        <ul class="nav flex-column sub-menu ps-3">
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('antrian.guest') ? 'active' : '' }}" href="{{ route('antrian.guest') }}">
+              <i class="mdi mdi-account-plus me-1"></i> Daftar Antrian
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('antrian.admin') ? 'active' : '' }}" href="{{ route('antrian.admin') }}">
+              <i class="mdi mdi-view-dashboard me-1"></i> Admin Antrian
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('antrian.papan') ? 'active' : '' }}" href="{{ route('antrian.papan') }}" target="_blank">
+              <i class="mdi mdi-monitor me-1"></i> Papan Antrian
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
 
     
 
