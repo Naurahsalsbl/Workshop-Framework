@@ -17,6 +17,7 @@ use App\Http\Controllers\Vendor\VendorAuthController;
 use App\Http\Controllers\Wilayah\WilayahController;
 use App\Http\Controllers\Toko\TokoController;
 use App\Http\Controllers\Antrian\AntrianController;
+use App\Http\Controllers\Absensi\AbsensiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -189,6 +190,17 @@ Route::post('/terlambat',         [AntrianController::class, 'terlambat'])->name
 Route::post('/selesai',           [AntrianController::class, 'selesai'])->name('antrian.selesai');
 Route::post('/reset',             [AntrianController::class, 'reset'])->name('antrian.reset');
 
+// Pages
+Route::get('/absensi/scan',       [AbsensiController::class, 'scan'])->name('absensi.scan');
+Route::get('/absensi/rekap',      [AbsensiController::class, 'rekap'])->name('absensi.rekap');
+Route::get('/absensi/mahasiswa',  [AbsensiController::class, 'mahasiswa'])->name('absensi.mahasiswa');
+Route::get('/absensi/matakuliah', [AbsensiController::class, 'matakuliah'])->name('absensi.matakuliah');
+ 
+// Actions
+Route::post('/absensi/proses-scan',      [AbsensiController::class, 'prosesScan'])->name('absensi.proses-scan');
+Route::post('/absensi/mahasiswa/store',  [AbsensiController::class, 'storeMahasiswa'])->name('absensi.mahasiswa.store');
+Route::post('/absensi/mahasiswa/nfc',    [AbsensiController::class, 'updateNfc'])->name('absensi.mahasiswa.nfc');
+Route::post('/absensi/matakuliah/store', [AbsensiController::class, 'storeMatakuliah'])->name('absensi.matakuliah.store');
 
 // Auth routes dari Breeze
 require __DIR__.'/auth.php';

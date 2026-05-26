@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->trustProxies(at: '*');
+        $middleware->trustHosts(at: ['degenerative-unitalicized-dulcie.ngrok-free.dev']);
+
         $middleware->validateCsrfTokens(except: [
             'payment/notification',
         ]);

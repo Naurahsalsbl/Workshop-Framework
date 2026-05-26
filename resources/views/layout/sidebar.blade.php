@@ -180,6 +180,39 @@
         </ul>
       </div>
     </li>
+    {{-- Absensi NFC Collapse --}}
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#absensi-menu"
+        aria-expanded="{{ request()->routeIs('absensi.*') ? 'true' : 'false' }}">
+        <span class="menu-title">Absensi NFC</span>
+        <i class="mdi mdi-nfc menu-icon"></i>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse {{ request()->routeIs('absensi.*') ? 'show' : '' }}" id="absensi-menu">
+        <ul class="nav flex-column sub-menu ps-3">
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('absensi.scan') ? 'active' : '' }}" href="{{ route('absensi.scan') }}">
+              <i class="mdi mdi-nfc-tap me-1"></i> Scan Absensi
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('absensi.rekap') ? 'active' : '' }}" href="{{ route('absensi.rekap') }}">
+              <i class="mdi mdi-table me-1"></i> Rekap Absensi
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('absensi.mahasiswa') ? 'active' : '' }}" href="{{ route('absensi.mahasiswa') }}">
+              <i class="mdi mdi-account-group me-1"></i> Data Mahasiswa
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('absensi.matakuliah') ? 'active' : '' }}" href="{{ route('absensi.matakuliah') }}">
+              <i class="mdi mdi-book-open-variant me-1"></i> Data Matakuliah
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
 
     
 

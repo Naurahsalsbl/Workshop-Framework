@@ -24,6 +24,41 @@
       cursor: pointer;
     }
   </style>
+
+  <style>
+
+@media (max-width: 768px){
+
+    .sidebar{
+        width: 250px !important;
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: white;
+        z-index: 9999;
+        overflow-y: auto;
+    }
+
+    .main-panel{
+        margin-left: 250px !important;
+        width: calc(100% - 250px) !important;
+    }
+
+    .navbar{
+        width: 100% !important;
+    }
+
+    .content-wrapper{
+        padding: 10px !important;
+    }
+
+    table{
+        font-size: 12px;
+    }
+}
+
+</style>
 </head>
 
 <body>
